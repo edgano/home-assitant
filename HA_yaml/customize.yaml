@@ -1,0 +1,21 @@
+sensor.dark_sky_daily_high_temperature:
+  friendly_name: Daily high
+  icon: mdi:thermometer-lines
+sensor.dark_sky_daily_low_temperature:
+  friendly_name: Daily low
+  icon: mdi:thermometer
+sensor.dark_sky_temperature:
+  friendly_name: Current outdoor
+  icon: mdi:beach
+sensor.dark_sky_precip_probability:
+  friendly_name: Chance of rain
+  icon: mdi:weather-lightning-rainy
+sensor.back_garden:
+  friendly_name: Garden temperature
+  icon: mdi:temperature-celsius
+switch.wemos01_switch_01:
+  friendly_name: Riego 01
+  icon: mdi:water
+switch.wemos01_switch_02:
+  friendly_name: Riego 02
+  icon: mdi:water-off

@@ -1,0 +1,15 @@
+weather:
+  name: Weather
+  entities:
+    - sensor.dark_sky_temperature
+    - sensor.dark_sky_daily_high_temperature
+    - sensor.dark_sky_daily_low_temperature
+    - sensor.dark_sky_precip_probability
+    - sun.next_rising
+    - sun.next_setting
+garden:
+  name: Garden
+  entities:
+    - sensor.back_garden
+    - switch.wemos01_switch_01
+    - switch.wemos01_switch_02

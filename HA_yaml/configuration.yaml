@@ -1,0 +1,140 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret home_lat
+  longitude: !secret home_lon
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 200
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Madrid
+  # Customization file
+  customize: !include customize.yaml
+
+# Show links to resources in log and frontend
+# introduction:
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+  # Secrets are defined in the file secrets.yaml
+   api_password: !secret http_password
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+   #base_url: edgano.ddns.net:8123
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+# Track the sun
+sun:
+
+#MQTT BROKER
+mqtt:
+  broker: !secret mqtt_broker
+  port: !secret mqtt_port
+  client_id: home-assistant-1
+  keepalive: 60
+  username: !secret mqtt_user
+  password: !secret mqtt_password
+  protocol: 3.1 
+  
+#Weather prediction
+sensor:
+  - platform: darksky 
+    api_key: !secret dark_sky_api
+    monitored_conditions:
+      - precip_probability
+      - temperature
+      - temperature_max
+      - temperature_min
+
+#temperature sensor
+  - platform: mqtt
+    state_topic: "WeMos02/temperature"
+    name: "Back garden"
+    unit_of_measurement: "°C"
+    qos: 1
+    
+# Text to speech
+tts:
+  - platform: google
+
+# Cloud
+#cloud:
+
+switch 1:
+  - platform: mqtt
+    name: "WeMos01 Switch 01"
+    state_topic: "/Wemos01/switchConfirm1/"
+    command_topic: "/Wemos01/switch1/"
+    payload_on: "1"
+    payload_off: "0"
+    qos: 0
+    retain: true 
+switch 2:
+  - platform: mqtt
+    name: "WeMos01 Switch 02"
+    state_topic: "/Wemos01/switchConfirm2/"
+    command_topic: "/Wemos01/switch2/"
+    payload_on: "1"
+    payload_off: "0"
+    qos: 0
+    retain: true
+
+# Example configuration.yaml entry
+#media_player:
+#  - platform: cast
+
+# Zones for location tracking
+zone:
+- name: Home
+  latitude: !secret home_lat
+  longitude: !secret home_lon
+  radius: 100
+  icon: mdi:home
+- name: Almacen
+  latitude: !secret almacen_lat
+  longitude: !secret almacen_lon
+  radius: 100
+  icon: mdi:tshirt-crew
+- name: CRG
+  latitude: !secret crg_lat
+  longitude: !secret crg_lon
+  radius: 100
+  icon: mdi:flask-outline
+- name: Piso Bcn
+  latitude: !secret bcn_lat
+  longitude: !secret bcn_lon
+  radius: 100
+  icon: mdi:home  
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
